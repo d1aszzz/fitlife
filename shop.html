@@ -480,6 +480,124 @@
         .cart-notification i {
             margin-right: 0.7rem;
             font-size: 1.2rem;
+        }        /* Мобильная адаптивность */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.3rem;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .shop-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .shop-hero p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+            
+            .shop-section {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .category-tabs {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+            
+            .category-tab {
+                margin-bottom: 0.5rem;
+                min-width: auto;
+                max-width: none;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .add-to-cart {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+            
+            .wishlist {
+                width: 100%;
+                border-radius: 50px;
+                height: auto;
+                padding: 0.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .cart-notification {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1.5rem 0;
+            }
+            
+            .shop-hero {
+                padding: 2rem 1rem;
+                margin: 1rem auto;
+            }
+            
+            .shop-hero h2 {
+                font-size: 1.7rem;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo i {
+                font-size: 1.7rem;
+            }
+            
+            .product-info {
+                padding: 1.2rem;
+            }
+            
+            .product-title {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -790,6 +908,27 @@
             
             // Инициализация
             displayProducts();
+        });
+    </script>
+        <script>
+        // Улучшение для мобильных устройств
+        document.addEventListener('touchstart', function() {}, {passive: true});
+
+        // Предотвращение масштабирования при двойном тапе
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // Улучшение отзывчивости на мобильных
+        document.addEventListener('DOMContentLoaded', function() {
+            if ('ontouchstart' in window) {
+                document.body.classList.add('touch-device');
+            }
         });
     </script>
 </body>
