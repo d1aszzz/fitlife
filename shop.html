@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин - FitLife | Спортивное питание и добавки</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 15px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,128L48,144C96,160,192,192,288,186.7C384,181,480,139,576,138.7C672,139,768,181,864,192C960,203,1056,181,1152,165.3C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+        
+        .nav-links a i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:hover {
+            background: var(--gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .shop-hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: white;
+            margin: 2rem auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+        }
+        
+        .shop-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+        
+        .shop-hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .shop-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #6c757d;
+        }
+        
+        .btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .btn-accent {
+            background: var(--gradient-accent);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn-accent:hover {
+            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.4);
+        }
+        
+        .shop-section {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .category-tabs {
+            display: flex;
+            margin-bottom: 2.5rem;
+            background: #f8f9fa;
+            border-radius: 50px;
+            padding: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-tab {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0.3rem;
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+        }
+        
+        .category-tab.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid #f1f3f4;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-info {
+            padding: 1.8rem;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.7rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .product-description {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .add-to-cart {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+            margin-right: 0.8rem;
+        }
+        
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .add-to-cart i {
+            margin-right: 0.5rem;
+        }
+        
+        .wishlist {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wishlist:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            position: relative;
+            padding-bottom: 0.7rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        .cart-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .cart-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .cart-notification i {
+            margin-right: 0.7rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-dumbbell"></i> FitLife Магазин</h1>
+            <p class="subtitle">Качественное спортивное питание для ваших результатов</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-apple-alt"></i>
+                <span>FitLife</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-calculator"></i> Калькулятор</a></li>
+                <li><a href="shop.html" class="active"><i class="fas fa-store"></i> Магазин</a></li>
+                <li><a href="index.html#info"><i class="fas fa-info-circle"></i> Рекомендации</a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i> Корзина</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section class="shop-hero">
+            <h2>Магазин спортивного питания</h2>
+            <p>Широкий ассортимент протеинов, гейнеров, витаминов и аксессуаров для достижения ваших фитнес-целей</p>
+            <a href="#products" class="btn btn-accent"><i class="fas fa-arrow-down"></i> Смотреть товары</a>
+        </section>
+        
+        <section id="products" class="shop-section">
+            <h2 class="section-title">Каталог товаров</h2>
+            
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">
+                    <i class="fas fa-th-large"></i> Все товары
+                </div>
+                <div class="category-tab" data-category="protein">
+                    <i class="fas fa-cube"></i> Протеины
+                </div>
+                <div class="category-tab" data-category="gainer">
+                    <i class="fas fa-bullseye"></i> Гейнеры
+                </div>
+                <div class="category-tab" data-category="vitamin">
+                    <i class="fas fa-capsules"></i> Витамины
+                </div>
+                <div class="category-tab" data-category="accessory">
+                    <i class="fas fa-dumbbell"></i> Аксессуары
+                </div>
+            </div>
+            
+            <div class="products-grid" id="products-container">
+                <!-- Товары будут загружены через JavaScript -->
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FitLife Магазин</h3>
+                    <p>Качественное спортивное питание и добавки для достижения ваших фитнес-целей.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-calculator"></i> Калькулятор КБЖУ</a></li>
+                        <li><a href="shop.html"><i class="fas fa-store"></i> Магазин</a></li>
+                        <li><a href="index.html#info"><i class="fas fa-info-circle"></i> Рекомендации</a></li>
+                        <li><a href="#"><i class="fas fa-blog"></i> Блог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Категории</h3>
+                    <ul class="footer-links">
+                        <li><a href="shop.html"><i class="fas fa-cube"></i> Протеины</a></li>
+                        <li><a href="shop.html"><i class="fas fa-bullseye"></i> Гейнеры</a></li>
+                        <li><a href="shop.html"><i class="fas fa-capsules"></i> Витамины</a></li>
+                        <li><a href="shop.html"><i class="fas fa-dumbbell"></i> Аксессуары</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="tel:+79991234567"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a></li>
+                        <li><a href="mailto:shop@fitlife.ru"><i class="fas fa-envelope"></i> shop@fitlife.ru</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Москва, ул. Спортивная, 15</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FitLife Магазин. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="cart-notification" id="cart-notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Товар добавлен в корзину!</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы интерфейса
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const productsContainer = document.getElementById('products-container');
+            const cartNotification = document.getElementById('cart-notification');
+            
+            // Переменные для хранения данных
+            let currentCategory = 'all';
+            let cart = [];
+            
+            // Данные товаров
+            const products = [
+                {
+                    id: 1,
+                    name: "Сывороточный протеин",
+                    category: "protein",
+                    price: 2499,
+                    description: "Высококачественный изолят сывороточного протеина с содержанием белка 90%.",
+                    icon: "fas fa-weight",
+                    badge: "Хит"
+                },
+                {
+                    id: 2,
+                    name: "Многокомпонентный протеин",
+                    category: "protein",
+                    price: 1999,
+                    description: "Смесь различных видов белка для продолжительного высвобождения аминокислот.",
+                    icon: "fas fa-cubes",
+                    badge: ""
+                },
+                {
+                    id: 3,
+                    name: "Высококалорийный гейнер",
+                    category: "gainer",
+                    price: 3299,
+                    description: "Эффективная формула для набора мышечной массы с высоким содержанием углеводов.",
+                    icon: "fas fa-bullseye",
+                    badge: "Новинка"
+                },
+                {
+                    id: 4,
+                    name: "Масс-гейнер",
+                    category: "gainer",
+                    price: 2799,
+                    description: "Сбалансированный гейнер с оптимальным соотношением белков и углеводов.",
+                    icon: "fas fa-chart-line",
+                    badge: ""
+                },
+                {
+                    id: 5,
+                    name: "Комплекс витаминов",
+                    category: "vitamin",
+                    price: 1499,
+                    description: "Полный спектр витаминов и минералов для поддержания здоровья и иммунитета.",
+                    icon: "fas fa-capsules",
+                    badge: ""
+                },
+                {
+                    id: 6,
+                    name: "Витамин D3",
+                    category: "vitamin",
+                    price: 899,
+                    description: "Высокодозированный витамин D3 для здоровья костей и иммунной системы.",
+                    icon: "fas fa-sun",
+                    badge: "Скидка"
+                },
+                {
+                    id: 7,
+                    name: "BCAA",
+                    category: "accessory",
+                    price: 1799,
+                    description: "Аминокислоты с разветвленной цепью для восстановления и роста мышц.",
+                    icon: "fas fa-dna",
+                    badge: ""
+                },
+                {
+                    id: 8,
+                    name: "Креатин моногидрат",
+                    category: "accessory",
+                    price: 1299,
+                    description: "Чистый креатин для увеличения силы и мышечной массы.",
+                    icon: "fas fa-bolt",
+                    badge: "Хит"
+                },
+                {
+                    id: 9,
+                    name: "Шейкер PRO",
+                    category: "accessory",
+                    price: 799,
+                    description: "Профессиональный шейкер для приготовления коктейлей с удобным дизайном.",
+                    icon: "fas fa-blender",
+                    badge: ""
+                },
+                {
+                    id: 10,
+                    name: "Пояс для тренировок",
+                    category: "accessory",
+                    price: 2199,
+                    description: "Эргономичный пояс для поддержки спины во время тяжелых упражнений.",
+                    icon: "fas fa-ring",
+                    badge: ""
+                }
+            ];
+            
+            // Обработчики событий для вкладок категорий
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Убираем активный класс у всех вкладок
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущей вкладке
+                    this.classList.add('active');
+                    // Сохраняем выбранную категорию
+                    currentCategory = this.getAttribute('data-category');
+                    // Отображаем товары выбранной категории
+                    displayProducts();
+                });
+            });
+            
+            // Функция отображения товаров
+            function displayProducts() {
+                productsContainer.innerHTML = '';
+                
+                const filteredProducts = currentCategory === 'all' 
+                    ? products 
+                    : products.filter(product => product.category === currentCategory);
+                
+                filteredProducts.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image">
+                            <i class="${product.icon}"></i>
+                            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-price">${product.price} ₸</div>
+                            <div class="product-actions">
+                                <button class="add-to-cart" data-id="${product.id}">
+                                    <i class="fas fa-cart-plus"></i> В корзину
+                                </button>
+                                <button class="wishlist">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    productsContainer.appendChild(productCard);
+                });
+                
+                // Добавляем обработчики событий для кнопок "В корзину"
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        addToCart(productId);
+                    });
+                });
+                
+                // Добавляем обработчики для кнопок избранного
+                document.querySelectorAll('.wishlist').forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.innerHTML = '<i class="fas fa-heart"></i>';
+                        this.style.background = 'var(--accent)';
+                        this.style.color = 'white';
+                    });
+                });
+            }
+            
+            // Функция добавления товара в корзину
+            function addToCart(productId) {
+                const product = products.find(p => p.id === productId);
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        quantity: 1
+                    });
+                }
+                
+                // Показываем уведомление
+                cartNotification.classList.add('show');
+                setTimeout(() => {
+                    cartNotification.classList.remove('show');
+                }, 3000);
+                
+                // Анимация кнопки
+                const button = document.querySelector(`.add-to-cart[data-id="${productId}"]`);
+                button.innerHTML = '<i class="fas fa-check"></i> Добавлено';
+                button.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-cart-plus"></i> В корзину';
+                    button.style.background = '';
+                }, 2000);
+            }
+            
+            // Инициализация
+            displayProducts();
+        });
+    </script>
+</body>
+</html>

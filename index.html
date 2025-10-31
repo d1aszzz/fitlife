@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - КБЖУ калькулятор и фитнес-питание</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-accent: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 15px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,128L48,144C96,160,192,192,288,186.7C384,181,480,139,576,138.7C672,139,768,181,864,192C960,203,1056,181,1152,165.3C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+        
+        .nav-links a i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:hover {
+            background: var(--gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            background: white;
+            margin: 2rem auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: #6c757d;
+        }
+        
+        .btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn i {
+            margin-right: 0.5rem;
+        }
+        
+        .btn-accent {
+            background: var(--gradient-accent);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn-accent:hover {
+            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.4);
+        }
+        
+        .calculator-section, .info-section {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+        
+        .goal-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background: #f8f9fa;
+            border-radius: 50px;
+            padding: 0.5rem;
+        }
+        
+        .goal-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .goal-tab.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        .result-section {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .result-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .result-card {
+            background: #f8f9fa;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .result-card p {
+            font-size: 1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .info-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--primary);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card h3 i {
+            margin-right: 0.7rem;
+            font-size: 1.7rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .info-card ul {
+            padding-left: 1.5rem;
+        }
+        
+        .info-card li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .info-card li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            position: absolute;
+            left: -1.5rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            position: relative;
+            padding-bottom: 0.7rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-dumbbell"></i> FitLife</h1>
+            <p class="subtitle">Достигайте идеальной формы с умным подходом к питанию и тренировкам</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-apple-alt"></i>
+                <span>FitLife</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-calculator"></i> Калькулятор</a></li>
+                <li><a href="shop.html"><i class="fas fa-store"></i> Магазин</a></li>
+                <li><a href="#info"><i class="fas fa-info-circle"></i> Рекомендации</a></li>
+                <li><a href="#results"><i class="fas fa-chart-line"></i> Результаты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section class="hero">
+            <h2>Преобразите свое тело с помощью правильного питания</h2>
+            <p>Наш интеллектуальный калькулятор рассчитает вашу персональную норму калорий и макронутриентов для достижения идеальной формы</p>
+            <button id="start-calc" class="btn btn-accent floating"><i class="fas fa-calculator"></i> Начать расчет</button>
+        </section>
+        
+        <section id="calculator" class="calculator-section">
+            <h2 class="section-title">Калькулятор КБЖУ</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #6c757d;">Заполните данные для расчета персональной программы питания</p>
+            
+            <div class="goal-tabs">
+                <div class="goal-tab active" data-goal="loss">
+                    <i class="fas fa-weight"></i> Снижение веса
+                </div>
+                <div class="goal-tab" data-goal="maintenance">
+                    <i class="fas fa-balance-scale"></i> Поддержание
+                </div>
+                <div class="goal-tab" data-goal="gain">
+                    <i class="fas fa-muscle"></i> Набор массы
+                </div>
+            </div>
+            
+            <div class="calculator-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="gender"><i class="fas fa-venus-mars"></i> Пол</label>
+                        <select id="gender">
+                            <option value="male">Мужской</option>
+                            <option value="female">Женский</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age"><i class="fas fa-birthday-cake"></i> Возраст (лет)</label>
+                        <input type="number" id="age" min="15" max="80" value="30">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="height"><i class="fas fa-ruler-vertical"></i> Рост (см)</label>
+                        <input type="number" id="height" min="120" max="220" value="175">
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="form-group">
+                        <label for="weight"><i class="fas fa-weight"></i> Вес (кг)</label>
+                        <input type="number" id="weight" min="40" max="200" value="70">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="activity"><i class="fas fa-running"></i> Уровень активности</label>
+                        <select id="activity">
+                            <option value="1.2">Сидячий образ жизни</option>
+                            <option value="1.375">Легкая активность</option>
+                            <option value="1.55" selected>Умеренная активность</option>
+                            <option value="1.725">Высокая активность</option>
+                            <option value="1.9">Экстремальная активность</option>
+                        </select>
+                    </div>
+                    
+                    <button id="calculate" class="btn" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-calculator"></i> Рассчитать КБЖУ
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="result" class="result-section hidden">
+            <h2 class="section-title">Ваши результаты</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #6c757d;">Персональная программа питания для вашей цели</p>
+            
+            <div class="result-grid">
+                <div class="result-card">
+                    <h3 id="calories-result">0</h3>
+                    <p>Калории (ккал/день)</p>
+                </div>
+                <div class="result-card">
+                    <h3 id="protein-result">0</h3>
+                    <p>Белки (г/день)</p>
+                </div>
+                <div class="result-card">
+                    <h3 id="fat-result">0</h3>
+                    <p>Жиры (г/день)</p>
+                </div>
+                <div class="result-card">
+                    <h3 id="carbs-result">0</h3>
+                    <p>Углеводы (г/день)</p>
+                </div>
+            </div>
+            
+            <div class="info-card" style="margin-top: 2rem; text-align: left;">
+                <h3><i class="fas fa-clipboard-list"></i> Рекомендации по питанию</h3>
+                <p id="recommendations">Здесь будут персонализированные рекомендации по питанию для вашей цели.</p>
+            </div>
+        </section>
+        
+        <section id="info" class="info-section">
+            <h2 class="section-title">Рекомендации для ваших целей</h2>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3><i class="fas fa-weight"></i> Для набора массы</h3>
+                    <ul>
+                        <li>Создайте профицит калорий (потребляйте больше, чем тратите)</li>
+                        <li>Увеличьте потребление белка до 1.6-2.2 г на кг веса</li>
+                        <li>Не забывайте о сложных углеводах для энергии</li>
+                        <li>Пейте достаточно воды для гидратации мышц</li>
+                        <li>Соблюдайте режим питания (5-6 приемов пищи в день)</li>
+                        <li>Сочетайте правильное питание с силовыми тренировками</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-apple-alt"></i> Для снижения веса</h3>
+                    <ul>
+                        <li>Создайте дефицит калорий (потребляйте меньше, чем тратите)</li>
+                        <li>Сохраняйте высокое потребление белка для сохранения мышц</li>
+                        <li>Ограничьте простые углеводы и добавленные сахара</li>
+                        <li>Увеличьте потребление клетчатки для сытости</li>
+                        <li>Пейте достаточно воды для ускорения метаболизма</li>
+                        <li>Сочетайте диету с кардио и силовыми тренировками</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FitLife</h3>
+                    <p>Помогаем достигать фитнес-целей через правильное питание и индивидуальный подход.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-calculator"></i> Калькулятор КБЖУ</a></li>
+                        <li><a href="shop.html"><i class="fas fa-store"></i> Магазин</a></li>
+                        <li><a href="#info"><i class="fas fa-info-circle"></i> Рекомендации</a></li>
+                        <li><a href="#"><i class="fas fa-blog"></i> Блог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Категории</h3>
+                    <ul class="footer-links">
+                        <li><a href="shop.html"><i class="fas fa-cube"></i> Протеины</a></li>
+                        <li><a href="shop.html"><i class="fas fa-bullseye"></i> Гейнеры</a></li>
+                        <li><a href="shop.html"><i class="fas fa-capsules"></i> Витамины</a></li>
+                        <li><a href="shop.html"><i class="fas fa-dumbbell"></i> Аксессуары</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="tel:+79991234567"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a></li>
+                        <li><a href="mailto:info@fitlife.ru"><i class="fas fa-envelope"></i> info@fitlife.ru</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Москва, ул. Спортивная, 15</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FitLife. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы интерфейса
+            const goalTabs = document.querySelectorAll('.goal-tab');
+            const calculateBtn = document.getElementById('calculate');
+            const startCalcBtn = document.getElementById('start-calc');
+            const resultSection = document.getElementById('result');
+            
+            // Переменные для хранения данных
+            let currentGoal = 'loss'; // По умолчанию - снижение веса
+            
+            // Обработчики событий для вкладок целей
+            goalTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Убираем активный класс у всех вкладок
+                    goalTabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущей вкладке
+                    this.classList.add('active');
+                    // Сохраняем выбранную цель
+                    currentGoal = this.getAttribute('data-goal');
+                });
+            });
+            
+            // Обработчик для кнопки "Начать расчет"
+            startCalcBtn.addEventListener('click', function() {
+                document.getElementById('calculator').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+            
+            // Обработчик для кнопки расчета
+            calculateBtn.addEventListener('click', function() {
+                calculateKBJU();
+                resultSection.classList.remove('hidden');
+                resultSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+            
+            // Функция расчета КБЖУ
+            function calculateKBJU() {
+                // Получаем значения из формы
+                const gender = document.getElementById('gender').value;
+                const age = parseInt(document.getElementById('age').value);
+                const height = parseInt(document.getElementById('height').value);
+                const weight = parseInt(document.getElementById('weight').value);
+                const activity = parseFloat(document.getElementById('activity').value);
+                
+                // Рассчитываем базовый метаболизм (BMR) по формуле Миффлина-Сан Жеора
+                let bmr;
+                if (gender === 'male') {
+                    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+                
+                // Рассчитываем общий расход энергии (TDEE)
+                const tdee = bmr * activity;
+                
+                // Корректируем калории в зависимости от цели
+                let calories;
+                let protein, fat, carbs;
+                
+                switch(currentGoal) {
+                    case 'loss':
+                        calories = Math.round(tdee * 0.85); // Дефицит 15%
+                        protein = Math.round(weight * 2.2); // 2.2 г белка на кг веса
+                        fat = Math.round((calories * 0.25) / 9); // 25% от калорий
+                        carbs = Math.round((calories - (protein * 4 + fat * 9)) / 4);
+                        break;
+                    case 'maintenance':
+                        calories = Math.round(tdee);
+                        protein = Math.round(weight * 1.8); // 1.8 г белка на кг веса
+                        fat = Math.round((calories * 0.25) / 9); // 25% от калорий
+                        carbs = Math.round((calories - (protein * 4 + fat * 9)) / 4);
+                        break;
+                    case 'gain':
+                        calories = Math.round(tdee * 1.15); // Профицит 15%
+                        protein = Math.round(weight * 2.0); // 2.0 г белка на кг веса
+                        fat = Math.round((calories * 0.25) / 9); // 25% от калорий
+                        carbs = Math.round((calories - (protein * 4 + fat * 9)) / 4);
+                        break;
+                }
+                
+                // Обновляем результаты на странице
+                document.getElementById('calories-result').textContent = calories;
+                document.getElementById('protein-result').textContent = protein;
+                document.getElementById('fat-result').textContent = fat;
+                document.getElementById('carbs-result').textContent = carbs;
+                
+                // Генерируем рекомендации
+                let recommendations = '';
+                
+                if (currentGoal === 'loss') {
+                    recommendations = `Для снижения веса рекомендуется потреблять <span class="highlight">${calories} ккал</span> в день. 
+                    Обратите внимание на качество продуктов: увеличьте потребление овощей, нежирных белков и полезных жиров. 
+                    Распределите приемы пищи равномерно в течение дня и не пропускайте завтрак. 
+                    Рекомендуется сочетать диету с кардиотренировками 3-4 раза в неделю.`;
+                } else if (currentGoal === 'maintenance') {
+                    recommendations = `Для поддержания веса рекомендуется потреблять <span class="highlight">${calories} ккал</span> в день. 
+                    Сбалансируйте рацион, включив все группы продуктов. Следите за качеством питания и регулярно занимайтесь физической активностью.
+                    Рекомендуется комбинировать силовые и кардиотренировки для поддержания формы.`;
+                } else {
+                    recommendations = `Для набора мышечной массы рекомендуется потреблять <span class="highlight">${calories} ккал</span> в день. 
+                    Увеличьте потребление белка для поддержки роста мышц. Не забывайте о сложных углеводах для энергии на тренировках 
+                    и полезных жирах для гормональной функции. Рекомендуется сосредоточиться на силовых тренировках с прогрессией нагрузок.`;
+                }
+                
+                document.getElementById('recommendations').innerHTML = recommendations;
+            }
+        });
+    </script>
+</body>
+</html>
