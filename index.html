@@ -516,7 +516,107 @@
             100% {
                 transform: translateY(0px);
             }
-        }
+        }/* Мобильная адаптивность */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        padding: 1rem 0;
+    }
+    
+    .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-links li {
+        margin: 0.3rem;
+    }
+    
+    .nav-links a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    .calculator-section, .info-section, .result-section {
+        padding: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .goal-tabs {
+        flex-direction: column;
+        border-radius: 15px;
+    }
+    
+    .goal-tab {
+        margin-bottom: 0.5rem;
+    }
+    
+    .result-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .info-cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    /* Улучшаем форму для мобильных */
+    input, select {
+        font-size: 16px; /* Предотвращает масштабирование в iOS */
+        padding: 0.8rem;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.5rem 0;
+    }
+    
+    .hero {
+        padding: 2rem 1rem;
+        margin: 1rem auto;
+    }
+    
+    .hero h2 {
+        font-size: 1.7rem;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .logo i {
+        font-size: 1.7rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -821,6 +921,27 @@
                 }
                 
                 document.getElementById('recommendations').innerHTML = recommendations;
+            }
+        });
+    </script>
+        <script>
+        // Улучшение для мобильных устройств
+        document.addEventListener('touchstart', function() {}, {passive: true});
+
+        // Предотвращение масштабирования при двойном тапе
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // Улучшение отзывчивости на мобильных
+        document.addEventListener('DOMContentLoaded', function() {
+            if ('ontouchstart' in window) {
+                document.body.classList.add('touch-device');
             }
         });
     </script>
